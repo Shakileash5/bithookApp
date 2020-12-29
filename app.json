@@ -1,0 +1,12 @@
+{
+  "name": "BitHook",
+  "displayName": "BitHook",
+  "expo": {
+    "name": "BitHook",
+    "slug": "BitHook",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
