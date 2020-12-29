@@ -1,12 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
-import { StyleSheet, Text, View,TextInput,ScrollView,TouchableOpacity,Image} from 'react-native';
+import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,TouchableOpacity,Image} from 'react-native';
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements'
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
+
+  const [isLoading, setLoading] = useState(true);
+  var data = [];
+  const key = "9924d3911cf21a14cac79595f1a1b33e"
+  const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
+  var data1 = {};
+
+  const setData = (val)=>{
+    data = val;
+  }
+
+  const getCoinData = ()=>{
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json);
+        console.log(data);
+      }).catch((error) => console.error(error))
+      .finally(() => {setLoading(false);console.log(data);});
+
+  }
+
+  useEffect(() => {
+    getCoinData();
+  }, []);
+
+
+
+
   return (
     <View style={styles.container}>
       <View elevation={15} style={styles.header}> 
@@ -31,8 +60,6 @@ export default function App() {
 
       <ScrollView style={styles.cardView} > 
         <View style={{flexDirection:"row",backgroundColor:"#343C5F",padding:10,width:'100%',borderRadius:15,height:"100%"}}>
-          
-          
           <View style={{flexDirection:"column",width:"100%"}}>
             <View style={{flex:1,flexDirection:"row"}}>
                 <Image source={{ uri:"https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/bitcoin.png"}} style={styles.profileImg} />
@@ -43,7 +70,7 @@ export default function App() {
                 <Text style={{alignSelf:"flex-start",color:"white",fontSize:10,fontWeight:"200",marginLeft:15,marginTop:14}}>Current Price </Text>
                 < Icon name="caret-up" color="#49AF41" type="font-awesome" style={{marginLeft:10,marginTop:8}} />
                 <Text style={{alignSelf:"flex-start",color:"#63F763",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10}}>199822.0</Text>
-                < Icon solid name="crosshairs" color="yellow" type="font-awesome" style={{marginLeft:10,marginTop:8}} />
+                < Icon solid name="crosshairs" color="#F59300" type="font-awesome" style={{marginLeft:10,marginTop:8,}} />
 
           </View>
           <View
@@ -59,25 +86,25 @@ export default function App() {
               <Text style={{alignSelf:"flex-start",color:"#F7F2F2",fontSize:12,marginTop:1}}> 1H% </Text>
               <Text style={{alignSelf:"flex-start",color:"#ED4337",fontSize:13,fontWeight:"bold"}}>-490</Text>
               <View
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: 'grey',
-                height:"100%",
-                margin:5
-              }}
-            />
-              <Text style={{alignSelf:"flex-start",color:"white",fontSize:12,marginTop:1}}> 1D% </Text>
-              <Text style={{alignSelf:"flex-start",color:"#63F763",fontSize:13,fontWeight:"bold"}}>+290</Text>
-              <View
-              style={{
-                borderRightWidth: 1,
-                borderRightColor: 'grey',
-                height:"100%",
-                margin:5
-              }}
-            />
-              <Text>Hooked</Text>
-            </View>
+                style={{
+                  borderRightWidth: 1,
+                  borderRightColor: 'grey',
+                  height:"100%",
+                  margin:5
+                }}
+              />
+                <Text style={{alignSelf:"flex-start",color:"white",fontSize:12,marginTop:1}}> 1D% </Text>
+                <Text style={{alignSelf:"flex-start",color:"#63F763",fontSize:13,fontWeight:"bold"}}>+290</Text>
+                <View
+                  style={{
+                    borderRightWidth: 1,
+                    borderRightColor: 'grey',
+                    height:"100%",
+                    margin:5
+                  }}
+                />
+                <Text style={{alignSelf:"flex-start",color:"white",fontSize:12,}}>Hooked</Text>
+              </View>
             
           </View>
           </View>
