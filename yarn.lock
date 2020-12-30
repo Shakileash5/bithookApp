@@ -1146,6 +1146,10 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
+"@gpsgate/react-native-eventsource@git+https://github.com/ExpandoPakistan/react-native-eventsource.git":
+  version "0.0.1"
+  resolved "git+https://github.com/ExpandoPakistan/react-native-eventsource.git#2f05c307ee3b1f5cfb8f949f0d7fbf0c81f64500"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -6284,6 +6288,11 @@ react-native-elements@^3.0.1:
     react-native-ratings "^7.3.0"
     react-native-safe-area-context "^3.1.9"
     react-native-size-matters "^0.3.1"
+
+react-native-event-source@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-event-source/-/react-native-event-source-1.1.0.tgz#75a085df49d17ffd6ff31ffeb269dd64e21b841a"
+  integrity sha512-CAs76IW8kTrdy0okfV2KPopm7E9TL0uNAR+SRrN7iZ/ii0zBeHWuhD4Q2F8gRKvmkrEtCZ6uwnfYL2TFmK0QZg==
 
 react-native-gesture-handler@~1.8.0:
   version "1.8.0"

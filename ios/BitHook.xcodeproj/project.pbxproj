@@ -14,6 +14,8 @@
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		96905EF65AED1B983A6B3ABC /* libPods-BitHook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-BitHook.a */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		7864BC5E88A8447A993D9530 /* libRNEventSource.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D5A41B8FE9646548E4204BE /* libRNEventSource.a */; };
+		EF6268FF0ABD4A1889D9CB5B /* RNEventSourceTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 438401FA20E3497EA42A8C2F /* RNEventSourceTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,9 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		5FB074B213584DDFAFC1D1C0 /* RNEventSource.xcodeproj */ = {isa = PBXFileReference; name = "RNEventSource.xcodeproj"; path = "../node_modules/react-native-eventsource/ios/RNEventSource.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0D5A41B8FE9646548E4204BE /* libRNEventSource.a */ = {isa = PBXFileReference; name = "libRNEventSource.a"; path = "libRNEventSource.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		438401FA20E3497EA42A8C2F /* RNEventSourceTests.xctest */ = {isa = PBXFileReference; name = "RNEventSourceTests.xctest"; path = "RNEventSourceTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +45,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				96905EF65AED1B983A6B3ABC /* libPods-BitHook.a in Frameworks */,
+				7864BC5E88A8447A993D9530 /* libRNEventSource.a in Frameworks */,
+				EF6268FF0ABD4A1889D9CB5B /* RNEventSourceTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +82,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5FB074B213584DDFAFC1D1C0 /* RNEventSource.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -315,6 +323,15 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/BitHook\"",
+					"\"$(SRCROOT)/BitHook\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 			};
 			name = Debug;
 		};
@@ -338,6 +355,15 @@
 				PRODUCT_NAME = BitHook;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/BitHook\"",
+					"\"$(SRCROOT)/BitHook\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/..",
+				);
 			};
 			name = Release;
 		};

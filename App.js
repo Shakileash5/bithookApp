@@ -4,14 +4,17 @@ import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,Touchable
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements'
+import RNEventSource from './RNNEventSource';
+//import EventSource from "@gpsgate/react-native-eventsource";
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
 
   const [isLoading, setLoading] = useState(true);
-  const [val,setVal] = useState([]);
+  const [streamStarted,setStreamStarted] = useState(false);
   const [data,setData] = useState([]);
   const [propData,setPropData] = useState([])
+  var eventSource = {};
   const key = "9924d3911cf21a14cac79595f1a1b33e"
   const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
   var iconUrl = "https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/"
@@ -32,6 +35,7 @@ export default function App() {
     getCoinData();
     //console.log(data);
     
+    
   }, []);
 
   useEffect(()=> {
@@ -43,7 +47,75 @@ export default function App() {
     setPropData(items);
   },[data]);
 
+  const setHook = (id,track)=>{
+    try{
+      fetch('http://127.0.0.1:5000/trackCoins', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          coinId: id,
+          track: track
+        })
+      }).then((response)=>{
+          console.log("response",response);
+      });
+    }
+    catch(exception){
+      console.log(exception);
+    }
+  }
 
+  const startStream = ()=>{
+
+    if(streamStarted) return;
+    else{
+      try{
+        /*
+        eventSource = new RNEventSource('http://127.0.0.1:5000/stream');
+        console.log(eventSource)
+        eventSource.addEventListener('message', message => {
+          console.log(message);
+          setStreamStarted(true); 
+        });*/
+        eventSource = new RNEventSource('http://127.0.0.1:5000/stream');
+        eventSource.onopen = () => {
+          console.debug("onopen");
+        };
+        eventSource.onmessage = message => {
+          console.debug(message);
+        };
+        eventSource.onerror = err => {
+          console.error(err);
+        };
+      }
+      catch(exception){
+        console.log("streamError",exception);
+      }
+    }
+
+  } 
+
+  const endStream = () => {
+    if (!eventSource) return;
+    eventSource.removeAllListeners();
+    eventSource.close();
+    setStreamStarted(false);
+  };
+
+  const hookCoin = (i,id)=>{
+    var items = [...propData];
+    items[i]["hooked"]=true;
+    setPropData(items);
+    setHook(id,true);
+    startStream();
+  }
+
+  //componentWillUnmount(){
+  //  endStream();
+  //}
 
   return (
     <View style={styles.container}>
@@ -92,7 +164,7 @@ export default function App() {
                     <Text style={{alignSelf:"flex-start",color:"white",fontSize:10,fontWeight:"200",marginLeft:15,marginTop:14}}>Current Price </Text>
                     < Icon name={parseFloat(hourPercent)>0?"caret-up":"caret-down"} color={parseFloat(hourPercent)>0?"#49AF41":"#ED4337"} type="font-awesome" style={{marginLeft:10,marginTop:8}} />
                     <Text style={{alignSelf:"flex-start",color:"white",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}}>{parseFloat(coin.price).toFixed(2)}</Text>
-                    < Icon solid name="crosshairs" color={propData[i]!=undefined?(propData[i]["hooked"]?"#F59300":"cyan"):"cyan"} type="font-awesome" style={{marginLeft:10,marginTop:8,color:"#F59300"}} onPress={()=>{var items = [...propData];items[i]["hooked"]=true;setPropData(items);}} />
+                    < Icon solid name="crosshairs" color={propData[i]!=undefined?(propData[i]["hooked"]?"#F59300":"cyan"):"cyan"} type="font-awesome" style={{marginLeft:10,marginTop:8,color:"#F59300"}} onPress={()=>{hookCoin(i,coin.id);}} />
 
               </View>
               <View
