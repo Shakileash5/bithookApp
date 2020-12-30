@@ -11,6 +11,7 @@ export default function App() {
   const [isLoading, setLoading] = useState(true);
   const [val,setVal] = useState([]);
   const [data,setData] = useState([]);
+  const [propData,setPropData] = useState([])
   const key = "9924d3911cf21a14cac79595f1a1b33e"
   const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
   var iconUrl = "https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/"
@@ -21,7 +22,7 @@ export default function App() {
       .then((response) => response.json())
       .then((json) => {
         setData(json);
-        console.log(data);
+        //console.log(data);  
       }).catch((error) => console.error(error))
       .finally(() => {setLoading(false);});
 
@@ -29,9 +30,18 @@ export default function App() {
 
   useEffect(() => {
     getCoinData();
-    console.log(data);
+    //console.log(data);
+    
   }, []);
 
+  useEffect(()=> {
+    var items = [];
+        data.map((coin,id)=>{
+        items.push({"uid":id,"id":coin.id,"hooked":false})
+        
+    });
+    setPropData(items);
+  },[data]);
 
 
 
@@ -60,7 +70,7 @@ export default function App() {
       <ScrollView style={styles.cardView} > 
       {
         data.map((coin,i)=>{
-          console.log(coin);
+         // console.log(coin);
           var hourPercent = "0";
           var dayPercent = "0";
           var urlL = coin.logo_url.split(".");
@@ -82,7 +92,7 @@ export default function App() {
                     <Text style={{alignSelf:"flex-start",color:"white",fontSize:10,fontWeight:"200",marginLeft:15,marginTop:14}}>Current Price </Text>
                     < Icon name={parseFloat(hourPercent)>0?"caret-up":"caret-down"} color={parseFloat(hourPercent)>0?"#49AF41":"#ED4337"} type="font-awesome" style={{marginLeft:10,marginTop:8}} />
                     <Text style={{alignSelf:"flex-start",color:"white",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}}>{parseFloat(coin.price).toFixed(2)}</Text>
-                    < Icon solid name="crosshairs" color="#F59300" type="font-awesome" style={{marginLeft:10,marginTop:8,}} />
+                    < Icon solid name="crosshairs" color={propData[i]!=undefined?(propData[i]["hooked"]?"#F59300":"cyan"):"cyan"} type="font-awesome" style={{marginLeft:10,marginTop:8,color:"#F59300"}} onPress={()=>{var items = [...propData];items[i]["hooked"]=true;setPropData(items);}} />
 
               </View>
               <View
