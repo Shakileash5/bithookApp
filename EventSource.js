@@ -26,6 +26,7 @@ var EventSource = function(url, options) {
   function pollAgain(interval) {
     eventsource._pollTimer = setTimeout(function() {
       poll.call(eventsource);
+      console.log("polling");
     }, interval);
   }
 
@@ -33,10 +34,12 @@ var EventSource = function(url, options) {
     try {
       // force hiding of the error message... insane?
       if (eventsource.readyState == eventsource.CLOSED) return;
+      console.log(eventsource,"see")
 
       // NOTE: IE7 and upwards support
       var xhr = new XMLHttpRequest();
       xhr.open(eventsource.OPTIONS.method || 'GET', eventsource.URL, true);
+      console.log(xhr,"xhr")
       if (eventsource.OPTIONS && eventsource.OPTIONS.headers) {
         Object.keys(eventsource.OPTIONS.headers).forEach(key => {
           xhr.setRequestHeader(key, eventsource.OPTIONS.headers[key]);
@@ -51,13 +54,14 @@ var EventSource = function(url, options) {
       if (lastEventId != null)
         xhr.setRequestHeader('Last-Event-ID', lastEventId);
       lastIndexProcessed = 0;
-
+      console.log(xhr,"xhr1")
       xhr.timeout =
         this.OPTIONS && this.OPTIONS.timeout !== undefined
           ? this.OPTIONS.timeout
           : 50000;
-
+      console.log(xhr,"xhr1")
       xhr.onreadystatechange = function() {
+        console.log("changes")
         if (
           this.readyState == 3 ||
           (this.readyState == 4 && this.status == 200)

@@ -3,10 +3,11 @@ import React,{useState,useEffect} from 'react';
 import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,TouchableOpacity,Image} from 'react-native';
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
-import { Icon } from 'react-native-elements'
-import RNEventSource from './RNNEventSource';
+import { Icon } from 'react-native-elements';
+//import RNEventSource from 'rn-eventsource-reborn';
+//import RNEventSource from './RNNEventSource';
 //import EventSource from "@gpsgate/react-native-eventsource";
-import { LinearGradient } from 'expo-linear-gradient';
+//import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
 
@@ -47,7 +48,7 @@ export default function App() {
     setPropData(items);
   },[data]);
 
-  const setHook = (id,track)=>{
+  const setHook = (id,track,items)=>{
     try{
       fetch('http://127.0.0.1:5000/trackCoins', {
         method: 'POST',
@@ -61,16 +62,21 @@ export default function App() {
         })
       }).then((response)=>{
           console.log("response",response);
+          startStream();
       });
     }
     catch(exception){
       console.log(exception);
+      setPropData(items);
     }
   }
 
   const startStream = ()=>{
 
-    if(streamStarted) return;
+    if(streamStarted) {
+      console.log("returned")
+      return;
+    }
     else{
       try{
         /*
@@ -79,8 +85,11 @@ export default function App() {
         eventSource.addEventListener('message', message => {
           console.log(message);
           setStreamStarted(true); 
-        });*/
+        });
+        console.log("entered")
         eventSource = new RNEventSource('http://127.0.0.1:5000/stream');
+      //  console.log(eventSource,"guyg");
+      
         eventSource.onopen = () => {
           console.debug("onopen");
         };
@@ -90,6 +99,15 @@ export default function App() {
         eventSource.onerror = err => {
           console.error(err);
         };
+        const source = new RNEventSource();
+      
+      source.addEventListener('open', (event) => {
+          console.log('Connection was opened!');
+      });
+
+        */
+        
+
       }
       catch(exception){
         console.log("streamError",exception);
@@ -107,10 +125,16 @@ export default function App() {
 
   const hookCoin = (i,id)=>{
     var items = [...propData];
-    items[i]["hooked"]=true;
+    var backup = [...propData]
+    if(items[i]["hooked"]==false){
+      items[i]["hooked"]=true;
+    }
+    else{
+      items[i]["hooked"]=false;
+    }
     setPropData(items);
-    setHook(id,true);
-    startStream();
+    setHook(id,items[i]["hooked"],backup);
+    
   }
 
   //componentWillUnmount(){
@@ -121,16 +145,7 @@ export default function App() {
     <View style={styles.container}>
       <View elevation={25} style={styles.header}> 
         <Text style={{alignSelf:"flex-start",color:"#E6EFF9",fontWeight:"bold",fontSize:18,}}>CryptoCurrencies</Text>
-        <TouchableOpacity style={{marginLeft:10,marginTop:5,}}>
-          <LinearGradient start={[0, 0.5]}
-                          end={[1, 0.5]}
-                          colors={['#0D324D', '#7F5A83']}
-                          style={{borderRadius: 5,justifyContent:"center",width:40,height:20,alignItems:"center"}}>
-            <View >
-              <Text style={{alignSelf:"baseline",color:"#E6EFF9",fontWeight:"bold",fontSize:12,}}>INR</Text>
-            </View>
-          </LinearGradient>
-        </TouchableOpacity>
+        
         <IconButton
         icon="magnify"
         color={"#27D7CD"}
