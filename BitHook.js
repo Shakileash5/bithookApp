@@ -4,13 +4,7 @@ import App from "./App"
 import Login from "./login"
 import SignUp from "./signup"
 
-const MusicRoute = () => <Text>Music</Text>;
-
-const AlbumsRoute = () => <Text>Albums</Text>;
-
-const RecentsRoute = () => <Text>Recents</Text>;
-
-export default class MyComponent extends React.Component {
+export default class bitHook extends React.Component {
   state = {
     index: 1,
     routes: [
@@ -35,7 +29,7 @@ export default class MyComponent extends React.Component {
         onIndexChange={this._handleIndexChange}
         renderScene={this._renderScene}
         shifting={true}
-        elevation={25}
+        elevation={0}
       />
     );
   }

@@ -2,8 +2,10 @@ import React,{Component,useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
 //import AsyncStorage from '@react-native-community/async-storage'
 import Loading from "./loading"
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-function SignUp(){
+function SignUp({ navigation }){
 
     const [username,setUserName] = useState('');
     const [email,setEmail] = useState('');
@@ -15,6 +17,7 @@ function SignUp(){
         try{
             console.log("its now pressed",username,email,password);
             //await AsyncStorage.setItem("userName",username  );
+            navigation.push('bitHook')
         }
         catch(error){
             console.log(error);
@@ -49,7 +52,6 @@ function SignUp(){
     return(
 
         <View style={Styles.container}>
-        <Loading />
             <View style={{alignItems:'center',padding:0,width:"85%"}}>
                 <Text style={Styles.logo}>ToDO App</Text>    
                 <TextInput style={Styles.inputView} placeholder="Username" onChangeText={(text)=>{setUserName(text)}}></TextInput>

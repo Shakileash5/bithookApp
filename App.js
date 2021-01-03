@@ -4,6 +4,7 @@ import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,Touchable
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements';
+import Loading from "./loading"
 
 //import RNEventSource from 'rn-eventsource-reborn';
 //import RNEventSource from './RNNEventSource';
@@ -28,12 +29,14 @@ export default function App() {
       .then((json) => {
         setData(json);
         //console.log(data);  
-      }).catch((error) => console.error(error))
+        setLoading(false);
+      }).catch((error) => {console.error(error);setLoading(false);})
       .finally(() => {setLoading(false);});
 
   }
 
   useEffect(() => {
+    setLoading(true);
     getCoinData();
     //console.log(data);
     
@@ -144,6 +147,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+    {isLoading?<Loading />:null}
       <View elevation={25} style={styles.header}> 
         <Text style={{alignSelf:"flex-start",color:"#E6EFF9",fontWeight:"bold",fontSize:18,}}>CryptoCurrencies</Text>
         

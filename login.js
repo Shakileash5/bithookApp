@@ -1,7 +1,9 @@
 import React,{Component,useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View,TextInput,TouchableOpacity,Button,ScrollView,SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-function Login(){
+function Login({ navigation }){
 
     return(
 
@@ -13,10 +15,10 @@ function Login(){
                 <TouchableOpacity>
                      <Text style={Styles.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Styles.loginBtn}>
+                <TouchableOpacity style={Styles.loginBtn} >
                     <Text style={{color:"white",fontWeight:"bold"}}>LOGIN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={() => navigation.push('SignUp')}>
                     <Text style={{color:"white",fontWeight:"bold"}}>SIGNUP</Text>
                 </TouchableOpacity>
             </View>
@@ -30,7 +32,7 @@ function Login(){
 const Styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#1E1E1E',
+        backgroundColor: '#16192E',
         justifyContent:'center',
         alignItems:'center',
     },
