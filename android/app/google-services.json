@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1055476195143",
+    "project_id": "bithook",
+    "storage_bucket": "bithook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055476195143:android:ad895e9fb3532876b77662",
+        "android_client_info": {
+          "package_name": "com.bithook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055476195143-seusv48m2cvkndqiu2uj15a86cssgdgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBREDzu1TkZWu3L1LBnIJnanDIUsSKlvTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055476195143-seusv48m2cvkndqiu2uj15a86cssgdgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

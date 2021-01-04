@@ -4,6 +4,8 @@ import { StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
 import Loading from "./loading"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from './firebase';
+import "firebase/auth"
 
 function SignUp({ navigation }){
 

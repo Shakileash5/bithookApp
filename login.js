@@ -2,23 +2,55 @@ import React,{Component,useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View,TextInput,TouchableOpacity,Button,ScrollView,SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from './firebase';
+import Loading from "./loading"
+import "firebase/auth"
 
 function Login({ navigation }){
+
+    const [userName,setUserName] = useState("");
+    const [password,setPassword] = useState("");
+    const [error,setError] = useState(0);
+    const [errorMessage,setErrorMessage] = useState("");
+    const [isLoading, setLoading] = useState(false);
+
+
+    const loginPress = ()=>{
+        console.log("inside");
+        if(userName!="" && password!=""){
+            setLoading(true);
+            firebase.auth().signInWithEmailAndPassword(userName,password).then((response)=>{
+                const uid = response.user.uid;
+                console.log(uid,":: uid");
+                
+            }).catch(err =>{
+                console.log("err",err);
+            }).finally(()=>{
+                setLoading(false);
+            })
+        }
+        else{
+            setError(1);
+            setErrorMessage("Enter userName and password");
+        }
+    }
 
     return(
 
         <View style={Styles.container}>
+            {isLoading?<Loading />:null}
             <View style={{alignItems:'center',padding:20,width:"100%"}}>
-                <Text style={Styles.logo}>ToDO App</Text>
-                <TextInput style={Styles.inputView} placeholder="Email Id"></TextInput>
-                <TextInput style={Styles.inputView} placeholder="Password"></TextInput>
+                <Text style={Styles.logo}>BitHook</Text>
+                <Text style={error?{color:"#ED4337",fontsize:11,padding:10}:{display:"none"}}> {errorMessage} </Text>
+                <TextInput style={Styles.inputView} placeholder="Email Id" onChangeText={(text)=>{setUserName(text);}}  ></TextInput>
+                <TextInput style={Styles.inputView} placeholder="Password" onChangeText={(text)=>{setPassword(text);}} ></TextInput>
                 <TouchableOpacity>
                      <Text style={Styles.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={Styles.loginBtn} >
+                <TouchableOpacity style={Styles.loginBtn} onPress={() => {loginPress(); }}>
                     <Text style={{color:"white",fontWeight:"bold"}}>LOGIN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.push('SignUp')}>
+                <TouchableOpacity onPress={() => {navigation.push('SignUp'); }}>
                     <Text style={{color:"white",fontWeight:"bold"}}>SIGNUP</Text>
                 </TouchableOpacity>
             </View>
