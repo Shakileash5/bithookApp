@@ -7,12 +7,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from './firebase';
 import "firebase/auth"
 
-function SignUp({ navigation }){
+function SignUp({ route,navigation }){
 
-    const [username,setUserName] = useState('');
+    const [userName,setUserName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-
+    const [error,setError] = useState(0);
+    const [errorMessage,setErrorMessage] = useState("");
+    const [isLoading, setLoading] = useState(false);
+    const {userId } = route.params;
+    console.log(userId,"params");
     const [constructorHasRun,setConstructorHasRun] = useState(false);
     
     const storeData = async ()=>{
@@ -23,6 +27,30 @@ function SignUp({ navigation }){
         }
         catch(error){
             console.log(error);
+        }
+    }
+
+    const signupPress = ()=>{
+        if(userName!='' && password!=''){
+            setLoading(true);
+            firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then((response) => {
+                    const uid = response.user.uid;
+                    console.log("uid ::: ",uid);
+                    navigation.navigate("bitHook")
+                }).catch(err =>{
+                    console.log("err",err);
+                     setError(1);
+                     setErrorMessage(err.message); 
+                }).finally(()=>{
+                    setLoading(false);
+                });
+        }
+        else{
+            setError(1);
+            setErrorMessage("Enter userName and password");
         }
     }
 
@@ -54,12 +82,14 @@ function SignUp({ navigation }){
     return(
 
         <View style={Styles.container}>
+            {isLoading?<Loading />:null}
             <View style={{alignItems:'center',padding:0,width:"85%"}}>
-                <Text style={Styles.logo}>ToDO App</Text>    
+                <Text style={Styles.logo}>ToDO App</Text>   
+                <Text style={error?{color:"#ED4337",fontsize:11,padding:10,flex:1,justifyContent:"center",textAlign:"center"}:{display:"none"}}> {errorMessage} </Text> 
                 <TextInput style={Styles.inputView} placeholder="Username" onChangeText={(text)=>{setUserName(text)}}></TextInput>
                 <TextInput style={Styles.inputView} placeholder="Email Id" onChangeText={(text)=>{setEmail(text)}}></TextInput>
                 <TextInput style={Styles.inputView} placeholder="Password" onChangeText={(text)=>{setPassword(text)}}></TextInput>
-                <TouchableOpacity style={Styles.signupBtn} onPress={()=>storeData()}>
+                <TouchableOpacity style={Styles.signupBtn} onPress={()=>signupPress()}>
                     <Text style={{color:"white",fontWeight:"bold"}}>SIGNUP</Text>
                 </TouchableOpacity>
             </View>

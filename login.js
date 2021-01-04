@@ -22,12 +22,15 @@ function Login({ navigation }){
             firebase.auth().signInWithEmailAndPassword(userName,password).then((response)=>{
                 const uid = response.user.uid;
                 console.log(uid,":: uid");
+                navigation.navigate('SignUp',{userId:uid.toString()});
                 
             }).catch(err =>{
                 console.log("err",err);
+                setError(1);
+                setErrorMessage(err.message); 
             }).finally(()=>{
                 setLoading(false);
-            })
+            });
         }
         else{
             setError(1);
@@ -41,7 +44,7 @@ function Login({ navigation }){
             {isLoading?<Loading />:null}
             <View style={{alignItems:'center',padding:20,width:"100%"}}>
                 <Text style={Styles.logo}>BitHook</Text>
-                <Text style={error?{color:"#ED4337",fontsize:11,padding:10}:{display:"none"}}> {errorMessage} </Text>
+                <Text style={error?{color:"#ED4337",fontsize:11,padding:10,flex:1,justifyContent:"center",textAlign:"center"}:{display:"none"}}> {errorMessage} </Text>
                 <TextInput style={Styles.inputView} placeholder="Email Id" onChangeText={(text)=>{setUserName(text);}}  ></TextInput>
                 <TextInput style={Styles.inputView} placeholder="Password" onChangeText={(text)=>{setPassword(text);}} ></TextInput>
                 <TouchableOpacity>
