@@ -15,14 +15,17 @@ export default class bitHook extends React.Component {
   };
 
   _handleIndexChange = index => this.setState({ index });
-
+  
   _renderScene = BottomNavigation.SceneMap({
     hooks: SignUp,
     coins: App,
     account: Login,
   });
 
-  render() {
+  render(props) {
+    const { params } = this.props.navigation.state.params;
+    
+    console.log(params,"params");
     return (
       <BottomNavigation
         navigationState={this.state}

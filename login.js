@@ -22,7 +22,7 @@ function Login({ navigation }){
             firebase.auth().signInWithEmailAndPassword(userName,password).then((response)=>{
                 const uid = response.user.uid;
                 console.log(uid,":: uid");
-                navigation.navigate('SignUp',{userId:uid.toString()});
+                navigation.navigate('bitHook',{userId:uid.toString()});
                 
             }).catch(err =>{
                 console.log("err",err);
