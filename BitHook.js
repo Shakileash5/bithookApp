@@ -23,9 +23,7 @@ export default class bitHook extends React.Component {
   });
 
   render(props) {
-    const { params } = this.props.navigation.state.params;
     
-    console.log(params,"params");
     return (
       <BottomNavigation
         navigationState={this.state}

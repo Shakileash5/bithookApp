@@ -1,13 +1,13 @@
 import React,{Component,useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
-//import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
 import Loading from "./loading"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from './firebase';
 import "firebase/auth"
 
-function SignUp({ route,navigation }){
+function SignUp({ navigation }){
 
     const [userName,setUserName] = useState('');
     const [email,setEmail] = useState('');
@@ -15,8 +15,8 @@ function SignUp({ route,navigation }){
     const [error,setError] = useState(0);
     const [errorMessage,setErrorMessage] = useState("");
     const [isLoading, setLoading] = useState(false);
-    const {userId } = route.params;
-    console.log(userId,"params");
+   // const {userId } = route.params;
+   // console.log(userId,"params");
     const [constructorHasRun,setConstructorHasRun] = useState(false);
     
     const storeData = async ()=>{
@@ -57,8 +57,8 @@ function SignUp({ route,navigation }){
     const retrieveData = async ()=>{
         try{
 
-            //let userName_  = await AsyncStorage.getItem("userName");
-            //console.log(userName_," name")
+            let userName_  = await AsyncStorage.getItem("userName");
+            console.log(userName_," name")
 
         }
         catch(error){
@@ -71,7 +71,7 @@ function SignUp({ route,navigation }){
             return;
         }
         console.log("act like constructor");
-        //retrieveData();
+        retrieveData();
         setConstructorHasRun(true);
     }
     constructor();
