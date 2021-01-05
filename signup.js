@@ -23,7 +23,7 @@ function SignUp({navigation }){
         try{
             console.log("its now pressed",username,email,password);
             //await AsyncStorage.setItem("userName",username  );
-            navigation.push('bitHook')
+            navigation.push('login')
         }
         catch(error){
             console.log(error);

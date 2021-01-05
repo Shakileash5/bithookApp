@@ -50,31 +50,34 @@ export default function App(params,{navigation}) {
         data.map((coin,id)=>{
         items.push({"uid":id,"id":coin.id,"hooked":false})
     });
-    firebase.database().ref("CoinData/"+params.userId).once("value",function(snapData){
-          console.log(snapData.val(),snapData,"firebase data");
-          var snapData = snapData.val();
+    firebase.database().ref("CoinData/"+params.userId).once("value",function(coinData){
+          console.log(coinData.val(),coinData,"firebase data");
+          var snapData = coinData.val();
           //var items = [...propData];
-          snapData.map((snapCoin,i)=>{
-              data.map((coin,id)=>{
-              if(coin.id == snapCoin.id){
-                  items[i]["hooked"]=true;
-                  console.log("hooked pa",items[i])
-                }
-              });
-          });
+          if(snapData){
+            snapData.map((snapCoin,i)=>{
+                data.map((coin,id)=>{
+                if(coin.id == snapCoin.id){
+                    items[i]["hooked"]=true;
+                    console.log("hooked pa",items[i])
+                  }
+                });
+            });
+          }
           //setPropData(items);
         }).then(()=>{
           console.log("added data")
         }).finally(()=>{
-          console.log("finally");
+          console.log("finally",items);
           setPropData(items);
         })
+    //setPropData(items);
   },[data]);
-
+/*
   useEffect(()=>{
-    console.log("yfuyf",propData)
+    //console.log("yfuyf",propData)
   },[propData]);
-
+*/
   const setHook = (id,track,items)=>{
     try{
       fetch('http://127.0.0.1:5000/trackCoins', {
