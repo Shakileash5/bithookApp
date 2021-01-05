@@ -37,7 +37,7 @@ export default class bitHook extends React.Component {
 }
 */
 function bitHook({route,navigation}){
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(1);
   const [routes] = React.useState([
     { key: 'hooks', title: 'Hooks', icon: 'hook',  color: "#16194E",badge:true },
     { key: 'coins', title: 'Coins', icon: 'bitcoin', color: '#16194E' },

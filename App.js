@@ -5,7 +5,9 @@ import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appb
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements';
 import Loading from "./loading"
-
+import firebase from './firebase';
+import "firebase/auth"
+import "firebase/database"
 //import RNEventSource from 'rn-eventsource-reborn';
 //import RNEventSource from './RNNEventSource';
 //import EventSource from "@gpsgate/react-native-eventsource";
@@ -16,13 +18,15 @@ export default function App(params,{navigation}) {
   const [isLoading, setLoading] = useState(true);
   const [streamStarted,setStreamStarted] = useState(false);
   const [data,setData] = useState([]);
-  const [propData,setPropData] = useState([])
-  var eventSource = {};
+  const [propData,setPropData] = useState([]);
+
   const key = "9924d3911cf21a14cac79595f1a1b33e"
   const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
   var iconUrl = "https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/"
   iconUrl = "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@66d20453c8add12a8555d3822fa6983383cb9562/32/color/"
-  console.log(params,"id\n\n");
+
+  //console.log(params,"id\n\n");
+
   const getCoinData = ()=>{
     fetch(url)
       .then((response) => response.json())
@@ -38,19 +42,38 @@ export default function App(params,{navigation}) {
   useEffect(() => {
     setLoading(true);
     getCoinData();
-    //console.log(data);
-    
-    
+    console.log("CoinData/"+params.userId);
   }, []);
 
   useEffect(()=> {
     var items = [];
         data.map((coin,id)=>{
         items.push({"uid":id,"id":coin.id,"hooked":false})
-        
     });
-    setPropData(items);
+    firebase.database().ref("CoinData/"+params.userId).once("value",function(snapData){
+          console.log(snapData.val(),snapData,"firebase data");
+          var snapData = snapData.val();
+          //var items = [...propData];
+          snapData.map((snapCoin,i)=>{
+              data.map((coin,id)=>{
+              if(coin.id == snapCoin.id){
+                  items[i]["hooked"]=true;
+                  console.log("hooked pa",items[i])
+                }
+              });
+          });
+          //setPropData(items);
+        }).then(()=>{
+          console.log("added data")
+        }).finally(()=>{
+          console.log("finally");
+          setPropData(items);
+        })
   },[data]);
+
+  useEffect(()=>{
+    console.log("yfuyf",propData)
+  },[propData]);
 
   const setHook = (id,track,items)=>{
     try{
@@ -62,11 +85,12 @@ export default function App(params,{navigation}) {
         },
         body: JSON.stringify({
           coinId: id,
-          track: track
+          track: track,
+          userId:params.userId
         })
       }).then((response)=>{
           console.log("response",response);
-          startStream();
+          //startStream();
       });
     }
     catch(exception){
@@ -74,58 +98,6 @@ export default function App(params,{navigation}) {
       setPropData(items);
     }
   }
-
-  const startStream = ()=>{
-
-    if(streamStarted) {
-      console.log("returned")
-      return;
-    }
-    else{
-      try{
-        /*
-        eventSource = new RNEventSource('http://127.0.0.1:5000/stream');
-        console.log(eventSource)
-        eventSource.addEventListener('message', message => {
-          console.log(message);
-          setStreamStarted(true); 
-        });
-        console.log("entered")
-        eventSource = new RNEventSource('http://127.0.0.1:5000/stream');
-      //  console.log(eventSource,"guyg");
-      
-        eventSource.onopen = () => {
-          console.debug("onopen");
-        };
-        eventSource.onmessage = message => {
-          console.debug(message);
-        };
-        eventSource.onerror = err => {
-          console.error(err);
-        };
-        const source = new RNEventSource();
-      
-      source.addEventListener('open', (event) => {
-          console.log('Connection was opened!');
-      });
-
-        */
-        
-
-      }
-      catch(exception){
-        console.log("streamError",exception);
-      }
-    }
-
-  } 
-
-  const endStream = () => {
-    if (!eventSource) return;
-    eventSource.removeAllListeners();
-    eventSource.close();
-    setStreamStarted(false);
-  };
 
   const hookCoin = (i,id)=>{
     var items = [...propData];
@@ -140,10 +112,6 @@ export default function App(params,{navigation}) {
     setHook(id,items[i]["hooked"],backup);
     
   }
-
-  //componentWillUnmount(){
-  //  endStream();
-  //}
 
   return (
     <View style={styles.container}>
@@ -217,7 +185,7 @@ export default function App(params,{navigation}) {
                           margin:5
                         }}
                       />
-                      <Text style={{alignSelf:"flex-start",color:"white",fontSize:12,}}>Hooked</Text>
+                      <Text style={{alignSelf:"flex-start",color:"white",fontSize:12,}}>{propData[i]!=undefined?(propData[i]["hooked"]?"Hooked":"NotHooked"):"NotAvailable"}</Text>
                     </View>
                   
                 </View>
