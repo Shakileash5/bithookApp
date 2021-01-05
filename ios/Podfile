@@ -18,6 +18,8 @@ target 'BitHook' do
   # Note that if you have use_frameworks! enabled, Flipper will not work.
   #
    use_flipper!
+   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
    post_install do |installer|
      flipper_post_install(installer)
    end

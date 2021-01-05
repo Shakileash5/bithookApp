@@ -3,7 +3,7 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import App from "./App"
 import Login from "./login"
 import SignUp from "./signup"
-
+/*
 export default class bitHook extends React.Component {
   state = {
     index: 1,
@@ -35,3 +35,40 @@ export default class bitHook extends React.Component {
     );
   }
 }
+*/
+function bitHook({route,navigation}){
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'hooks', title: 'Hooks', icon: 'hook',  color: "#16194E",badge:true },
+    { key: 'coins', title: 'Coins', icon: 'bitcoin', color: '#16194E' },
+    { key: 'account', title: 'Account', icon: 'account', color: '#16194E' },
+  ]);
+  const {userId } = route.params;
+  console.log(userId,"params");
+  const renderScene =({ route, jumpTo }) => {
+  switch (route.key) {
+    case 'hooks':
+      return <SignUp jumpTo={jumpTo}  />;
+    case 'coins':
+      return <App jumpTo={jumpTo} userId={userId} />;
+    case 'account':
+      return <Login jumpTo={jumpTo} />;
+  }
+}
+  
+  /* BottomNavigation.SceneMap({
+    hooks: SignUp,
+    coins: App,
+    account: Login,
+  });*/
+
+  return (
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
+  );
+};
+
+export default bitHook;

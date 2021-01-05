@@ -13,6 +13,7 @@ function Login({ navigation }){
     const [error,setError] = useState(0);
     const [errorMessage,setErrorMessage] = useState("");
     const [isLoading, setLoading] = useState(false);
+    const [constructorHasRun,setConstructorHasRun] = useState(false);
 
 
     const loginPress = ()=>{
@@ -37,6 +38,22 @@ function Login({ navigation }){
             setErrorMessage("Enter userName and password");
         }
     }
+
+    const constructor = ()=>{
+        if(constructorHasRun){
+            return;
+        }
+        console.log("act like constructor");
+        //retrieveData();
+        firebase.auth().onAuthStateChanged(user =>{
+            console.log(user,"pakalam pa");
+            if(user){
+                navigation.navigate('bitHook',{userId:user.uid.toString()});
+            }
+        })
+        setConstructorHasRun(true);
+    }
+    constructor();
 
     return(
 

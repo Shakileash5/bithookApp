@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import firebase from './firebase';
 import "firebase/auth"
 
-function SignUp({ navigation }){
+function SignUp({navigation }){
 
     const [userName,setUserName] = useState('');
     const [email,setEmail] = useState('');
@@ -16,7 +16,7 @@ function SignUp({ navigation }){
     const [errorMessage,setErrorMessage] = useState("");
     const [isLoading, setLoading] = useState(false);
    // const {userId } = route.params;
-   // console.log(userId,"params");
+    //console.log(params,"params");
     const [constructorHasRun,setConstructorHasRun] = useState(false);
     
     const storeData = async ()=>{
@@ -39,7 +39,7 @@ function SignUp({ navigation }){
                 .then((response) => {
                     const uid = response.user.uid;
                     console.log("uid ::: ",uid);
-                    navigation.navigate("bitHook")
+                    navigation.navigate("login")
                 }).catch(err =>{
                     console.log("err",err);
                      setError(1);
@@ -77,8 +77,6 @@ function SignUp({ navigation }){
     constructor();
 
     
-
-
     return(
 
         <View style={Styles.container}>
