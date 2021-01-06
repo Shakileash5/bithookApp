@@ -27,29 +27,9 @@ export default function App(params,{navigation}) {
 
   //console.log(params,"id\n\n");
 
-  const getCoinData = ()=>{
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json);
-        //console.log(data);  
-        setLoading(false);
-      }).catch((error) => {console.error(error);setLoading(false);})
-      .finally(() => {setLoading(false);});
 
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    getCoinData();
-    console.log("CoinData/"+params.userId);
-  }, []);
-
-  useEffect(()=> {
-    var items = [];
-        data.map((coin,id)=>{
-        items.push({"uid":id,"id":coin.id,"hooked":false})
-    });
+  const getHookData = (items)=>{
+    //var items = [...propData]
     firebase.database().ref("CoinData/"+params.userId).once("value",function(coinData){
           console.log(coinData.val(),coinData,"firebase data");
           var snapData = coinData.val();
@@ -64,14 +44,44 @@ export default function App(params,{navigation}) {
                 });
             });
           }
-          //setPropData(items);
+          setPropData(items);
         }).then(()=>{
           console.log("added data")
         }).finally(()=>{
           console.log("finally",items);
-          setPropData(items);
+          //setPropData(items);
         })
-    //setPropData(items);
+  }
+
+  const getCoinData = ()=>{
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json);
+        //console.log(data); 
+        var items = [];
+        json.map((coin,id)=>{
+          items.push({"uid":id,"id":coin.id,"hooked":false})
+          });
+        console.log("hook",items)  
+        setPropData(items);
+        //console.log(propData);
+        getHookData(items); 
+        setLoading(false);
+
+      }).catch((error) => {console.error(error);setLoading(false);})
+      .finally(() => {setLoading(false);});
+
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    getCoinData();
+    console.log("CoinData/"+params.userId);
+  }, []);
+
+  useEffect(()=> {
+    
   },[data]);
 /*
   useEffect(()=>{
