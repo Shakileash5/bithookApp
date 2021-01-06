@@ -40,7 +40,7 @@ function SignUp({navigation }){
                     const uid = response.user.uid;
                     console.log("uid ::: ",uid);
                     firebase
-                        .database().ref("User/"+uid).set({uid:email})
+                        .database().ref("User/"+uid).set({userName:userName,mail:email,trackPeriod:60,curveLength:3})
                         .catch(err =>{
                             console.log("err",err);
                             setError(1);

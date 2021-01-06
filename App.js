@@ -30,13 +30,16 @@ export default function App(params,{navigation}) {
 
   const getHookData = (items)=>{
     //var items = [...propData]
+    console.log("data",data)
     firebase.database().ref("CoinData/"+params.userId).once("value",function(coinData){
-          console.log(coinData.val(),coinData,"firebase data");
+          console.log(coinData.val(),coinData,"firebase data",data);
           var snapData = coinData.val();
           //var items = [...propData];
           if(snapData){
             snapData.map((snapCoin,i)=>{
-                data.map((coin,id)=>{
+
+                items.map((coin,id)=>{
+                  //console.log(coin.id,snapCoin.id)
                 if(coin.id == snapCoin.id){
                     items[i]["hooked"]=true;
                     console.log("hooked pa",items[i])
@@ -49,7 +52,7 @@ export default function App(params,{navigation}) {
           console.log("added data")
         }).finally(()=>{
           console.log("finally",items);
-          //setPropData(items);
+          setPropData(items);
         })
   }
 
