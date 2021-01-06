@@ -4,7 +4,7 @@ import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,Touchable
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements';
-import Loading from "./loading"
+import Loading from "./loading";
 import firebase from './firebase';
 import "firebase/auth"
 import "firebase/database"

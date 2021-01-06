@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import firebase from './firebase';
 import Loading from "./loading"
-import "firebase/auth"
+import "firebase/auth";
 
 function Login({ navigation }){
 

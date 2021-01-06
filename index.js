@@ -1,7 +1,7 @@
 import { registerRootComponent } from 'expo';
 
-import App from './App';
-import bitHook from "./BitHook"
+//import App from './App';
+//import bitHook from "./BitHook"
 import MyStack from "./stack"
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in the Expo client or in a native build,

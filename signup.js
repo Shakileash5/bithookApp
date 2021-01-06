@@ -1,6 +1,6 @@
 import React,{Component,useState,useEffect,useRef} from 'react';
 import { StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage'
+//import AsyncStorage from '@react-native-community/async-storage'
 import Loading from "./loading"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -39,9 +39,16 @@ function SignUp({navigation }){
                 .then((response) => {
                     const uid = response.user.uid;
                     console.log("uid ::: ",uid);
+                    firebase
+                        .database().ref("User/"+uid).set({uid:email})
+                        .catch(err =>{
+                            console.log("err",err);
+                            setError(1);
+                            setErrorMessage(err.message); 
+                        })
                     navigation.navigate("login")
                 }).catch(err =>{
-                    console.log("err",err);
+                     console.log("err",err);
                      setError(1);
                      setErrorMessage(err.message); 
                 }).finally(()=>{
@@ -57,8 +64,8 @@ function SignUp({navigation }){
     const retrieveData = async ()=>{
         try{
 
-            let userName_  = await AsyncStorage.getItem("userName");
-            console.log(userName_," name")
+           // let userName_  = await AsyncStorage.getItem("userName");
+            //console.log(userName_," name")
 
         }
         catch(error){

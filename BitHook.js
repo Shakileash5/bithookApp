@@ -3,6 +3,7 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import App from "./App"
 import Login from "./login"
 import SignUp from "./signup"
+import Profile from "./profile"
 /*
 export default class bitHook extends React.Component {
   state = {
@@ -37,7 +38,7 @@ export default class bitHook extends React.Component {
 }
 */
 function bitHook({route,navigation}){
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(2);
   const [routes] = React.useState([
     { key: 'hooks', title: 'Hooks', icon: 'hook',  color: "#16194E",badge:true },
     { key: 'coins', title: 'Coins', icon: 'bitcoin', color: '#16194E' },
@@ -52,7 +53,7 @@ function bitHook({route,navigation}){
     case 'coins':
       return <App jumpTo={jumpTo} userId={userId} />;
     case 'account':
-      return <Login jumpTo={jumpTo} />;
+      return <Profile jumpTo={jumpTo} userId={userId} navigateTo={navigation} />;
   }
 }
   
