@@ -206,8 +206,8 @@ export default function Profile(params,{navigation}) {
             <Text style={{alignSelf:"center",color:"white",fontWeight:"bold",fontSize:16 }}> {userName} </Text>
           </View> 
           <View style={{flex:1,backgroundColor:'#343C6F',width:"100%",height:"100%",borderTopLeftRadius:30,overflow: 'hidden',borderTopRightRadius:30}} elevation={25}> 
-              <View style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}>
-                <TouchableOpacity onPress={()=>{setShowChangePass(1);setShow(0);setShowChangeTrackPeriod(0);}}  style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}>
+              <View style={styles.divStyle}>
+                <TouchableOpacity onPress={()=>{setShowChangePass(1);setShow(0);setShowChangeTrackPeriod(0);}}  style={styles.divStyle}>
                   < Icon name={"accessibility"} color={"#2BC06A"} type="material" style={{alignSelf:"flex-start",paddingLeft:20,paddingRight:20}}/>
                   <View style={{flex:1,flexDirection:"column"}}>  
                     <Text style={{alignSelf:"flex-start",color:"white",fontWeight:"bold",fontSize:14 }}>
@@ -219,8 +219,8 @@ export default function Profile(params,{navigation}) {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}>
-                <TouchableOpacity onPress={()=>{setShowChangeTrackPeriod(1);setShow(0);}}  style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}>
+              <View style={styles.divStyle}>
+                <TouchableOpacity onPress={()=>{setShowChangeTrackPeriod(1);setShow(0);}}  style={styles.divStyle}>
                   < Icon name={"eye"} color={"#E89511"} type="feather" style={{alignSelf:"flex-start",paddingLeft:20,paddingRight:20}}/>
                   <View style={{flex:1,flexDirection:"column"}}>  
                     <Text style={{alignSelf:"flex-start",color:"white",fontWeight:"bold",fontSize:14 }}>
@@ -232,8 +232,8 @@ export default function Profile(params,{navigation}) {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}>
-                <TouchableOpacity onPress={()=>{setShowChangeCurveLength(1);setShow(0);}}  style={{flexDirection:"row",width:"100%",height:"100%",flex:1,justifyContent:"center",alignItems:"center",borderBottomWidth:0.5,borderBottomColor:"grey"}}> 
+              <View style={styles.divStyle}>
+                <TouchableOpacity onPress={()=>{setShowChangeCurveLength(1);setShow(0);}}  style={styles.divStyle}> 
                   < Icon name={"analytics-outline"} color={"#8842A6"} type="ionicon" style={{alignSelf:"flex-start",paddingLeft:20,paddingRight:20}}/>
                   <View style={{flex:1,flexDirection:"column"}}>  
                     <Text style={{alignSelf:"flex-start",color:"white",fontWeight:"bold",fontSize:14 }}>
@@ -326,4 +326,14 @@ const styles = StyleSheet.create({
     marginLeft:5,
     marginBottom:10,
   },
+  divStyle: {
+    flexDirection:"row",
+    width:"100%",
+    height:"100%",
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center",
+    borderBottomWidth:0.5,
+    borderBottomColor:"grey",
+  }
 });

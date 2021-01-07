@@ -4,6 +4,7 @@ import App from "./App"
 import Login from "./login"
 import SignUp from "./signup"
 import Profile from "./profile"
+import HookHistory from "./history"
 /*
 export default class bitHook extends React.Component {
   state = {
@@ -38,7 +39,7 @@ export default class bitHook extends React.Component {
 }
 */
 function bitHook({route,navigation}){
-  const [index, setIndex] = React.useState(1);
+  const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'hooks', title: 'Hooks', icon: 'hook',  color: "#16194E",badge:true },
     { key: 'coins', title: 'Coins', icon: 'bitcoin', color: '#16194E' },
@@ -49,7 +50,7 @@ function bitHook({route,navigation}){
   const renderScene =({ route, jumpTo }) => {
   switch (route.key) {
     case 'hooks':
-      return <SignUp jumpTo={jumpTo}  />;
+      return <HookHistory jumpTo={jumpTo} userId={userId}/>;
     case 'coins':
       return <App jumpTo={jumpTo} userId={userId} />;
     case 'account':

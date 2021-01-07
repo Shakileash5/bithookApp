@@ -21,6 +21,7 @@ export default function App(params,{navigation}) {
   const [propData,setPropData] = useState([]);
 
   const key = "9924d3911cf21a14cac79595f1a1b33e"
+  const alternateKey = "c36717396ec409c55b99f59637c4fb5b"
   const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
   var iconUrl = "https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/"
   iconUrl = "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@66d20453c8add12a8555d3822fa6983383cb9562/32/color/"
