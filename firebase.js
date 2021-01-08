@@ -4,12 +4,11 @@ import firestore from 'firebase/firestore'
 const settings = {timestampsInSnapshots: true};
 
 const config = {
-  apiKey: "AIzaSyBREDzu1TkZWu3L1LBnIJnanDIUsSKlvTs",
-  authDomain: "bithook-default-rtdb.firebaseio.com/",
-  databaseURL: "https://bithook-default-rtdb.firebaseio.com/",
+  apiKey: "api key",
+  authDomain: "appName.firebaseio.com/",
+  databaseURL: "https://appName.firebaseio.com/",
   projectId: "bithook",
-  storageBucket: "https://bithook.appspot.com/",
-  messagingSenderId: "YOUR_MESSAGING_ID"
+  storageBucket: "https://appName.com/",
 };
 firebase.initializeApp(config);
 
