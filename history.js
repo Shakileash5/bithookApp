@@ -9,12 +9,6 @@ import firebase from './firebase';
 import "firebase/auth"
 import "firebase/database"
 
-const wait = (timeout) => {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-}
-
 export default function HookHistory(params,{navigation}) {
 
   const [isLoading, setLoading] = useState(true);
@@ -52,7 +46,6 @@ export default function HookHistory(params,{navigation}) {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     fetchData();
-    //wait(2000).then(() => setRefreshing(false));
   }, []);  
 
   useEffect(()=>{
@@ -62,7 +55,7 @@ export default function HookHistory(params,{navigation}) {
   return (
     <View style={styles.container}>
         <View elevation={25} style={styles.header}> 
-            <Text style={{alignSelf:"flex-start",color:"#E6EFF9",fontWeight:"bold",fontSize:18,paddingTop:5}}>HookHistory</Text>
+            <Text style={{alignSelf:"flex-start",color:"#E6EFF9",fontWeight:"bold",fontSize:18,paddingTop:15}}>HookHistory</Text>
       </View>
       <Text style={noData?{alignSelf:"center",color:"#E6EFF9",fontWeight:"bold",fontSize:18,}:{display:"none"}}> There are no history to reveal!  </Text>
       <ScrollView style={styles.cardView} refreshControl={
@@ -73,7 +66,7 @@ export default function HookHistory(params,{navigation}) {
           data.map((hook,i)=>{
           //var urlL = coin.logo_url.split(".");
             return(
-              <View key={i} style={{flexDirection:"row",backgroundColor:"#343C5F",padding:10,width:'100%',borderRadius:0,height:100,marginTop:0,borderBottomColor:"grey",borderBottomWidth:0.5}}>
+              <View key={i} style={{flexDirection:"row",backgroundColor:"#343C5F",padding:10,paddingLeft:20,width:'100%',borderRadius:0,height:100,borderBottomColor:"grey",borderBottomWidth:0.5}}>
                   <Image source={{ uri:"https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@66d20453c8add12a8555d3822fa6983383cb9562/128/color/"+hook.id.toLowerCase() + ".png"}} style={styles.profileImg} />
                           
                   <View style={{flexDirection:"column",width:"100%"}}>
@@ -83,7 +76,7 @@ export default function HookHistory(params,{navigation}) {
                           </View>
                           <Icon name={"inr"}  type="font-awesome" style={{alignSelf:"flex-start",color:"white",fontSize:10,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}} />
                           <Text style={{alignSelf:"flex-start",color:"white",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}}>{parseFloat(hook.hookPrice).toFixed(2)}</Text>
-                          <Text style={hook.type=="Hooked"?{color:"#2ECC71",alignSelf:"flex-start",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}:{color:"#EFAA30",alignSelf:"flex-start",fontSize:15,fontWeight:"bold",marginLeft:5,marginTop:10,flex:1}}>{hook.type=="Hooked"?"Hooked":"UnHooked"}</Text>
+                          <Text style={hook.type=="Hooked"?{color:"#2ECC71",alignSelf:"center",fontSize:15,fontWeight:"bold",marginLeft:35,marginTop:0,flex:1}:{color:"#EFAA30",alignSelf:"center",fontSize:15,fontWeight:"bold",marginLeft:25,marginTop:0,flex:1}}>{hook.type=="Hooked"?"Hooked":"UnHooked"}</Text>
                         
                       </View>
                     <View
@@ -94,7 +87,7 @@ export default function HookHistory(params,{navigation}) {
                         <View style={{flexDirection:"row",justifyContent:"center",alignSelf:"flex-start",marginLeft:15}}>
 
                                       <Text style={{color:"cyan",fontSize:15,marginTop:0}}> {hook.hookDateTime} </Text>
-                                      <Icon name={hook.type=="Hooked"?"space-shuttle":"money"}  type="font-awesome" color={"#FB48BC"} style={{alignSelf:"flex-start",color:"white",fontSize:10,fontWeight:"bold",marginLeft:20,marginTop:0,flex:1}} />
+                                      <Icon name={hook.type=="Hooked"?"space-shuttle":"money"}  type="font-awesome" color={"#FB48BC"} style={{alignSelf:"flex-end",color:"white",fontSize:10,fontWeight:"bold",marginLeft:45,marginTop:0,flex:1}} />
                               
                         </View>
                       </View>
@@ -123,6 +116,7 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     width:"100%",
     padding:10,
+    top:0,
     backgroundColor:"#16193E",
     height:70,
     alignItems:"center",

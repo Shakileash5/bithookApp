@@ -22,7 +22,7 @@ function Login({ navigation }){
             setLoading(true);
             firebase.auth().signInWithEmailAndPassword(userName,password).then((response)=>{
                 const uid = response.user.uid;
-                console.log(uid,":: uid");
+                //console.log(uid,":: uid");
                 navigation.navigate('bitHook',{userId:uid.toString()});
                 
             }).catch(err =>{
@@ -46,7 +46,7 @@ function Login({ navigation }){
         console.log("act like constructor");
         //retrieveData();
         firebase.auth().onAuthStateChanged(user =>{
-            console.log(user,"pakalam pa");
+            //console.log(user,"pakalam pa");
             if(user){
                 navigation.navigate('bitHook',{userId:user.uid.toString()});
             }

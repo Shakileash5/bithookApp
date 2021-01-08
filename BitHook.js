@@ -7,14 +7,14 @@ import Profile from "./profile"
 import HookHistory from "./history"
 
 function bitHook({route,navigation}){
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(1);
   const [routes] = React.useState([
     { key: 'hooks', title: 'Hooks', icon: 'hook',  color: "#16194E",badge:true },
     { key: 'coins', title: 'Coins', icon: 'bitcoin', color: '#16194E' },
     { key: 'account', title: 'Account', icon: 'account', color: '#16194E' },
   ]);
   const {userId } = route.params;
-  console.log(userId,"params");
+
   const renderScene =({ route, jumpTo }) => {
   switch (route.key) {
     case 'hooks':

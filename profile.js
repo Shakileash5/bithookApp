@@ -20,7 +20,8 @@ export default function Profile(params,{navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [inputText,setText] = useState("");
     const [constructorHasRun,setConstructorHasRun] = useState(false);
-    const [show, setShow] = useState(0);
+    const [show, setShow] = useState(0);   
+    const api = "https://bithookapi.herokuapp.com/"
     const userId = params.userId;
     var got = false;
     
@@ -28,9 +29,9 @@ export default function Profile(params,{navigation}) {
         got = bool;
     }
 
-    console.log("userIs",userId);
+    //console.log("userIs",userId);
     const logOut = ()=>{
-      console.log("Logged out");
+      //console.log("Logged out");
       try{
         firebase.auth().signOut();
         params.navigateTo.navigate("Login");
@@ -66,7 +67,7 @@ export default function Profile(params,{navigation}) {
 
     const setTrackPeriod = ()=>{
       try{
-        fetch('http://127.0.0.1:5000/changeTrackPeriod', {
+        fetch(api+'changeTrackPeriod', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -77,7 +78,7 @@ export default function Profile(params,{navigation}) {
             userId:params.userId
           })
         }).then((response)=>{
-            console.log("response",response);
+            //console.log("response",response);
             //startStream();
         }).finally(()=>{
             setShowChangeTrackPeriod(0);
@@ -92,7 +93,7 @@ export default function Profile(params,{navigation}) {
 
     const setCurveLength = ()=>{
       try{
-        fetch('http://127.0.0.1:5000/changeCurveLength', {
+        fetch(api+'changeCurveLength', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

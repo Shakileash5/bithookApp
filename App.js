@@ -23,18 +23,15 @@ export default function App(params,{navigation}) {
 
   const key = "9924d3911cf21a14cac79595f1a1b33e"
   const alternateKey = "c36717396ec409c55b99f59637c4fb5b"
+  const api = "https://bithookapi.herokuapp.com/"
   const url = "https://api.nomics.com/v1/currencies/ticker?key="+key+"&interval=1h,1d&convert=INR&per-page=100&page=1"
-  var iconUrl = "https://raw.githubusercontent.com/condacore/cryptocurrency-icons/master/128x128/"
-  iconUrl = "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@66d20453c8add12a8555d3822fa6983383cb9562/32/color/"
-
-  //console.log(params,"id\n\n");
-
+  var iconUrl = "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@66d20453c8add12a8555d3822fa6983383cb9562/32/color/"
 
   const getHookData = (items)=>{
     //var items = [...propData]
-    console.log("data",data)
+    //console.log("data",data)
     firebase.database().ref("CoinData/"+params.userId).once("value",function(coinData){
-          console.log(coinData.val(),coinData,"firebase data",data);
+          //console.log(coinData.val(),coinData,"firebase data",data);
           var snapData = coinData.val();
           //var items = [...propData];
           if(snapData){
@@ -44,16 +41,16 @@ export default function App(params,{navigation}) {
                   //console.log(coin.id,snapCoin.id)
                 if(coin.id == snapCoin.id){
                     items[i]["hooked"]=true;
-                    console.log("hooked pa",items[i])
+                    //console.log("hooked pa",items[i])
                   }
                 });
             });
           }
           setPropData(items);
         }).then(()=>{
-          console.log("added data")
+          //console.log("added data")
         }).finally(()=>{
-          console.log("finally",items);
+          //console.log("finally",items);
           setPropData(items);
         })
   }
@@ -68,7 +65,7 @@ export default function App(params,{navigation}) {
         json.map((coin,id)=>{
           items.push({"uid":id,"id":coin.id,"hooked":false})
           });
-        console.log("hook",items)  
+        //console.log("hook",items)  
         setPropData(items);
         //console.log(propData);
         getHookData(items); 
@@ -88,7 +85,7 @@ export default function App(params,{navigation}) {
   useEffect(() => {
     setRefreshing(true);
     getCoinData();
-    console.log("CoinData/"+params.userId);
+    //console.log("CoinData/"+params.userId);
   }, []);
 
   useEffect(()=> {
@@ -101,7 +98,7 @@ export default function App(params,{navigation}) {
 */
   const setHook = (id,track,items)=>{
     try{
-      fetch('http://127.0.0.1:5000/trackCoins', {
+      fetch(api+'trackCoins', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -113,7 +110,7 @@ export default function App(params,{navigation}) {
           userId:params.userId
         })
       }).then((response)=>{
-          console.log("response",response);
+          //console.log("response",response);
           //startStream();
       });
     }

@@ -21,7 +21,7 @@ function SignUp({navigation }){
     
     const storeData = async ()=>{
         try{
-            console.log("its now pressed",username,email,password);
+            //console.log("its now pressed",username,email,password);
             //await AsyncStorage.setItem("userName",username  );
             navigation.push('login')
         }
@@ -38,7 +38,7 @@ function SignUp({navigation }){
                 .createUserWithEmailAndPassword(email, password)
                 .then((response) => {
                     const uid = response.user.uid;
-                    console.log("uid ::: ",uid);
+                   // console.log("uid ::: ",uid);
                     firebase
                         .database().ref("User/"+uid).set({userName:userName,mail:email,trackPeriod:60,curveLength:3})
                         .catch(err =>{
@@ -61,24 +61,11 @@ function SignUp({navigation }){
         }
     }
 
-    const retrieveData = async ()=>{
-        try{
-
-           // let userName_  = await AsyncStorage.getItem("userName");
-            //console.log(userName_," name")
-
-        }
-        catch(error){
-            console.log(error)
-        }
-    }
-
     const constructor = ()=>{
         if(constructorHasRun){
             return;
         }
         console.log("act like constructor");
-        retrieveData();
         setConstructorHasRun(true);
     }
     constructor();
