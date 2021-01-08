@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
-import { ActivityIndicator,StyleSheet, Text, View,TextInput,ScrollView,TouchableOpacity,Image} from 'react-native';
+import { ActivityIndicator,StyleSheet, Text, View,RefreshControl,TextInput,ScrollView,TouchableOpacity,Image} from 'react-native';
 import {Provider as PaperProvider ,IconButton, Colors,RadioButton,Searchbar,Appbar   } from 'react-native-paper';
 import Constants from "expo-constants";
 import { Icon } from 'react-native-elements';
@@ -16,6 +16,7 @@ import "firebase/database"
 export default function App(params,{navigation}) {
 
   const [isLoading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [streamStarted,setStreamStarted] = useState(false);
   const [data,setData] = useState([]);
   const [propData,setPropData] = useState([]);
@@ -71,15 +72,21 @@ export default function App(params,{navigation}) {
         setPropData(items);
         //console.log(propData);
         getHookData(items); 
-        setLoading(false);
+        setRefreshing(false);;
 
-      }).catch((error) => {console.error(error);setLoading(false);})
-      .finally(() => {setLoading(false);});
+      }).catch((error) => {console.error(error);setRefreshing(false);;})
+      .finally(() => {setRefreshing(false);;});
 
   }
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getCoinData();
+    //wait(2000).then(() => setRefreshing(false));
+  }, []); 
+
   useEffect(() => {
-    setLoading(true);
+    setRefreshing(true);
     getCoinData();
     console.log("CoinData/"+params.userId);
   }, []);
@@ -132,7 +139,6 @@ export default function App(params,{navigation}) {
 
   return (
     <View style={styles.container}>
-    {isLoading?<Loading />:null}
       <View elevation={25} style={styles.header}> 
         <Text style={{alignSelf:"flex-start",color:"#E6EFF9",fontWeight:"bold",fontSize:18,}}>CryptoCurrencies</Text>
         
@@ -144,7 +150,9 @@ export default function App(params,{navigation}) {
         </IconButton> 
       </View>
 
-      <ScrollView style={styles.cardView} > 
+      <ScrollView style={styles.cardView} refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }> 
       {
         data.map((coin,i)=>{
          // console.log(coin);
